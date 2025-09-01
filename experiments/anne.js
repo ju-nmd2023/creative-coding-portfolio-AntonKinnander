@@ -18,7 +18,7 @@ function setup() {
    
   
   function draw() {
-    background(255,20,20);
+    background(255,Math.max(40 - eyeOpenFactor, 2), Math.max(20 - eyeOpenFactor, 2));
     fill(255,0,0);
     stroke(0);
     strokeWeight(2);
@@ -26,10 +26,13 @@ function setup() {
     
     
     if (mouseIsPressed && eyeOpenFactor < 50) {
-        eyeOpenFactor += 10;
+        eyeOpenFactor += 3;
     }
     else if (eyeOpenFactor > 0) {
-        eyeOpenFactor -= 3;
+        eyeOpenFactor -= 2;
+    }
+    else {
+        eyeOpenFactor = 0;
     }
     
   
@@ -60,15 +63,17 @@ function setup() {
       line(width / 2, y, 0, 0);
     }
   
+//    push();
+//     fill(0,0,0,200);
+//     ellipse(0, 0, max(width/7, height/4), (eyeOpenFactor*1.9) + 3);
+//     pop();
+push();
+strokeWeight(2 + (eyeOpenFactor/10));
+scale(0.7);
+ellipse(0, 0, max(width/10, height/8), eyeOpenFactor*1.8);
+pop();
    
-    ellipse(0, 0, 110, eyeOpenFactor) ;
-    ellipse(0, 0, 105, eyeOpenFactor) ;
-     // outer eye - mask
-    ellipse(0, 0, 100, eyeOpenFactor) ;
-    // center of eye - pupil
-    ellipse(0, 0, 95, eyeOpenFactor) ;
-    // inner eye - iris
-    ellipse(0, 0, 90, eyeOpenFactor) ;
+   
 
     
     pop();
