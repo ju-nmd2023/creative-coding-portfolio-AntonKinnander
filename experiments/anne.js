@@ -6,22 +6,41 @@
 // Basically im thinking i could just create lines along the edges of the canvas, going towards origo, the dark shape in the middle should still appear because close to 0 x or y there will be a huge amount of lines crammed into the space.
 
 // Idea, have clicking reveal an eye in the middle (blinking) with a mitten av ögat that follows the mouse
+let eyeOpenFactor;
+
+
 
 function setup() {
     createCanvas(innerWidth, innerHeight);
-  }
+    eyeOpenFactor = 0;
+    
+}
+   
   
   function draw() {
-    background(15, 0, 152);
-    stroke(255, 255, 255);
+    background(255,20,20);
+    fill(255,0,0);
+    stroke(0);
     strokeWeight(2);
+
+    
+    
+    if (mouseIsPressed && eyeOpenFactor < 50) {
+        eyeOpenFactor += 10;
+    }
+    else if (eyeOpenFactor > 0) {
+        eyeOpenFactor -= 3;
+    }
+    
   
     push();
     // easier for me to understand since the center is the center (origo)
     translate(width / 2, height / 2);
   
     // draw rows of lines along edges - Top + bottom = x value controlled coords 0,height/2 - 0,-height/2. Vice versa for sides. One node of lines is always origo
-    let numLines = Math.floor((width + height)/75); 
+    let numLines = Math.floor((width + height)/(75 - (eyeOpenFactor/2)))  ; 
+
+    
   
     // Draw lines, pow for density increase as they get closer to origo 
     for (let i = 0; i <= numLines; i++) {
@@ -41,11 +60,18 @@ function setup() {
       line(width / 2, y, 0, 0);
     }
   
+   
+    ellipse(0, 0, 110, eyeOpenFactor) ;
+    ellipse(0, 0, 105, eyeOpenFactor) ;
+     // outer eye - mask
+    ellipse(0, 0, 100, eyeOpenFactor) ;
+    // center of eye - pupil
+    ellipse(0, 0, 95, eyeOpenFactor) ;
+    // inner eye - iris
+    ellipse(0, 0, 90, eyeOpenFactor) ;
 
-  
+    
     pop();
-
- 
   }
 
   function windowResized() {
