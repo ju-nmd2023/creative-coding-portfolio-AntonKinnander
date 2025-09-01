@@ -9,22 +9,40 @@
 
 function setup() {
     createCanvas(innerWidth, innerHeight);
-    background(15, 0, 152);
   }
-
-function draw() {
-    // colormode(RGB);
+  
+  function draw() {
+    background(15, 0, 152);
     stroke(255, 255, 255);
-
+    strokeWeight(3);
+  
     push();
     // easier for me to understand since the center is the center (origo)
-    // translate(width / 2, height / 2);
-
+    translate(width / 2, height / 2);
+  
     // draw rows of lines along edges - Top + bottom = x value controlled coords 0,height/2 - 0,-height/2. Vice versa for sides. One node of lines is always origo
-    for (let x = 0; x < width; x += 10) {
-        line(width/2, height/2, width/x, height);
+    let numLines = 30; 
+  
+    // Draw lines, pow for density increase as they get closer to origo ( I was trying to make it work with absolute values and division but after consulting chatgpt i realized pow was easier)
+    for (let i = 0; i <= numLines; i++) {
+   
+      let t = map(i, 0, numLines, -1, 1);
+      let density = pow(t, 3);
+  
+      let x = density * (width / 2);
+      let y = density * (height / 2);
+  
+      // x
+      line(x, -height / 2, 0, 0);
+      line(x, height / 2, 0, 0);
+     
+      // y
+      line(-width / 2, y, 0, 0);
+      line(width / 2, y, 0, 0);
     }
+  
 
-
+  
     pop();
-}
+  }
+  
