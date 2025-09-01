@@ -18,8 +18,8 @@ function setup() {
    
   
   function draw() {
-    background(255,Math.max(40 - eyeOpenFactor, 2), Math.max(20 - eyeOpenFactor, 2));
-    fill(255,0,0);
+    background(239,Math.max(197 - eyeOpenFactor, 2), Math.max(20 - eyeOpenFactor, 2));
+    fill(220 , 0 , 0);
     stroke(0);
     strokeWeight(2);
 
@@ -41,7 +41,7 @@ function setup() {
     translate(width / 2, height / 2);
   
     // draw rows of lines along edges - Top + bottom = x value controlled coords 0,height/2 - 0,-height/2. Vice versa for sides. One node of lines is always origo
-    let numLines = Math.floor((width + height)/(75 - (eyeOpenFactor/2)))  ; 
+    let numLines = Math.floor((width + height)/(75 - (eyeOpenFactor/1.8)))  ; 
 
     
   
@@ -63,16 +63,17 @@ function setup() {
       line(width / 2, y, 0, 0);
     }
   
-//    push();
-//     fill(0,0,0,200);
-//     ellipse(0, 0, max(width/7, height/4), (eyeOpenFactor*1.9) + 3);
-//     pop();
+
 push();
 strokeWeight(2 + (eyeOpenFactor/10));
 scale(0.7);
 ellipse(0, 0, max(width/10, height/8), eyeOpenFactor*1.8);
+
+push();
+fill(0);
+ellipse(0, 0, max(width/24, height/20), (eyeOpenFactor*1.9) + 3);
 pop();
-   
+pop();
    
 
     
