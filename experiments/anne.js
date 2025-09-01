@@ -5,6 +5,7 @@
 
 // Basically im thinking i could just create lines along the edges of the canvas, going towards origo, the dark shape in the middle should still appear because close to 0 x or y there will be a huge amount of lines crammed into the space.
 
+// Idea, have clicking reveal an eye in the middle (blinking) with a mitten av ögat that follows the mouse
 
 function setup() {
     createCanvas(innerWidth, innerHeight);
@@ -15,7 +16,12 @@ function draw() {
     colormode(RGB);
     background(34, 39, 46);
     fill(108, 182, 255);
+    stroke(255, 255, 255);
 
+    push();
+    // easier for me to understand since the center is the center (origo)
     translate(width / 2, height / 2);
+
+    // draw rows of lines along edges - 0,full height, full width,0 , 
     
 }
