@@ -14,16 +14,16 @@ function setup() {
   function draw() {
     background(15, 0, 152);
     stroke(255, 255, 255);
-    strokeWeight(3);
+    strokeWeight(2);
   
     push();
     // easier for me to understand since the center is the center (origo)
     translate(width / 2, height / 2);
   
     // draw rows of lines along edges - Top + bottom = x value controlled coords 0,height/2 - 0,-height/2. Vice versa for sides. One node of lines is always origo
-    let numLines = 30; 
+    let numLines = Math.floor((width + height)/75); 
   
-    // Draw lines, pow for density increase as they get closer to origo ( I was trying to make it work with absolute values and division but after consulting chatgpt i realized pow was easier)
+    // Draw lines, pow for density increase as they get closer to origo 
     for (let i = 0; i <= numLines; i++) {
    
       let t = map(i, 0, numLines, -1, 1);
@@ -44,5 +44,10 @@ function setup() {
 
   
     pop();
+
+ 
   }
-  
+
+  function windowResized() {
+    resizeCanvas(innerWidth, innerHeight);
+  }
