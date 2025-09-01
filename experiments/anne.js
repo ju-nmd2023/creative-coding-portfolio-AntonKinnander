@@ -13,15 +13,18 @@ function setup() {
   }
 
 function draw() {
-    colormode(RGB);
-    background(34, 39, 46);
-    fill(108, 182, 255);
+    // colormode(RGB);
     stroke(255, 255, 255);
 
     push();
     // easier for me to understand since the center is the center (origo)
-    translate(width / 2, height / 2);
+    // translate(width / 2, height / 2);
 
-    // draw rows of lines along edges - 0,full height, full width,0 , 
-    
+    // draw rows of lines along edges - Top + bottom = x value controlled coords 0,height/2 - 0,-height/2. Vice versa for sides. One node of lines is always origo
+    for (let x = 0; x < width; x += 10) {
+        line(width/2, height/2, width/x, height);
+    }
+
+
+    pop();
 }
