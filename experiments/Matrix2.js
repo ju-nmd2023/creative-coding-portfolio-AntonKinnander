@@ -3,9 +3,11 @@
 const size = 20;
 const gap = 20;
 let amount;
+// Array to remember all the runes
+let runes = [];
 
 // rgb(12, 54, 10);
-// rgb(94, 207, 1);
+// rgb(1, 207, 94);
 
 function setup() {
   createCanvas(innerWidth, innerHeight);
@@ -27,9 +29,9 @@ function drawElement(counter) {
       push();
       noStroke();
       if (Math.random() < 0.5) {
-        stroke(94, 207, 1, 255 * randomSeed - (100*Math.random()));
+        stroke(1, 207, 94, 255 * randomSeed - (100*Math.random()));
         strokeWeight(1.5 * randomSeed);
-        fill(94, 207, 1, 255* randomSeed - (100*Math.random()));
+        fill(1, 255, 50 - random(1, 50), 255* randomSeed - (100*Math.random()));
       }
       square(x * s, y * s, s);
       pop();
@@ -63,6 +65,7 @@ function draw() {
 }
 
 function windowResized() {
-  resizeCanvas(innerWidth, innerHeight);
   amount = Math.floor(max(width, height) / (size + gap));
+  resizeCanvas(innerWidth, innerHeight);
+  
 }
