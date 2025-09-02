@@ -45,8 +45,7 @@ function draw() {
   noFill();
   strokeWeight(1);
 
-  const centerX = (width - size) / 2;
-  const centerY = (height - size) / 2;
+  
   for (let x = -Math.floor(amount / 2); x < Math.ceil(amount / 2); x++) {
     for (let y = -Math.floor(amount / 2); y < Math.ceil(amount / 2); y++) {
       let xPosition = centerX + x * (size + gap);
@@ -65,9 +64,17 @@ function draw() {
 }
 
 function windowResized() {
+  const centerX = (width - size) / 2;
+  const centerY = (height - size) / 2;
+
   amount = Math.floor(max(width, height) / (size + gap));
   for (let i = 0; i < amount; i++) {
-   runes.push(drawElement(0));
+   runes.push({
+    x: centerX + x * (size + gap),
+    y: centerY + y * (size + gap),
+    scale: 0.8 + Math.random(),
+    element: drawElement(0),
+  });
   }
   resizeCanvas(innerWidth, innerHeight);
   
