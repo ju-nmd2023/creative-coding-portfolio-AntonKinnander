@@ -18,21 +18,28 @@ function setup() {
 // Want to randomly offset positons (height) of each column
 
 function drawElement(randomSeed, runePixels, x, y) {
-  const fields = 4;
+  push();
+  translate(x, y);
+  const fields = 5; // 5x5 grid for 25 pixels
   const s = size / fields;
   scale(.8 + randomSeed);
   translate(randomSeed * 2, randomSeed * 2);
 
+  for (let i = 0; i < 25; i++) {
+    if (runePixels[i]) {
       push();
-      for (let i = 0; i < 25; i++) {
-        if (runePixels[i]) {
-        stroke(1, 207, 94, 255 * randomSeed - (100*Math.random()));
-        strokeWeight(1.5 * randomSeed);
-        fill(1, 255, 50 - random(1, 50), 255* randomSeed - (100*Math.random()));
-      }
-      square(x * s, y * s, s);
+      const gridX = i % 5; // column position (0-4)
+      const gridY = Math.floor(i / 5); // row position (0-4)
+      
+      stroke(1, 207, 94, 255 * randomSeed - (10*Math.random()));
+      strokeWeight(1.5 * randomSeed);
+      fill(1, 255, 50 - random(1, 50), 255* randomSeed - (10*Math.random()));
+      
+      square(gridX * s, gridY * s, s);
       pop();
     }
+  }
+  pop();
 }
 
 function draw() {
@@ -42,11 +49,11 @@ function draw() {
 
   
   for (let rune of runes) {
-      push();
-      scale(rune.scale);
       drawElement(rune.randomSeed, rune.runePixels, rune.x, rune.y);
-      pop();
+      // times scale so the smaller ones (percieved in the back) move slower for parallax effect i think its called
+      rune.y += 5.5 * rune.scale;
     }
+    
   }
 
 
