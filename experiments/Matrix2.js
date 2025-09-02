@@ -5,11 +5,11 @@ const gap = 20;
 let amount;
 
 // rgb(12, 54, 10);
-// rgb(198, 246, 25);
+// rgb(94, 207, 1);
 
 function setup() {
   createCanvas(innerWidth, innerHeight);
-  amount = Math.floor(max(width, height) / (size + gap));
+  windowResized();
   colorMode(RGB);
 }
 
@@ -21,14 +21,15 @@ function drawElement(counter) {
   const s = size / fields;
   const randomSeed = Math.random();
   scale(.8 + randomSeed);
+  translate(Math.random() * 2, Math.random() * 2);
   for (let x = 0; x < fields; x++) {
     for (let y = 0; y < fields; y++) {
       push();
       noStroke();
       if (Math.random() < 0.5) {
-        stroke(198, 246, 25, 255 * randomSeed - (100*Math.random()));
+        stroke(94, 207, 1, 255 * randomSeed - (100*Math.random()));
         strokeWeight(1.5 * randomSeed);
-        fill(198, 246, 25, 255* randomSeed - (100*Math.random()));
+        fill(94, 207, 1, 255* randomSeed - (100*Math.random()));
       }
       square(x * s, y * s, s);
       pop();
@@ -38,7 +39,7 @@ function drawElement(counter) {
 }
 
 function draw() {
-  background(12, 54, 10);
+  background(0);
   noFill();
   strokeWeight(1);
 
@@ -63,4 +64,5 @@ function draw() {
 
 function windowResized() {
   resizeCanvas(innerWidth, innerHeight);
+  amount = Math.floor(max(width, height) / (size + gap));
 }

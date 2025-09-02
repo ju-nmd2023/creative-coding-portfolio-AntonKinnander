@@ -1,5 +1,10 @@
 [
   {
+    "file": "experiments/Matrix2.js",
+    "name": "The Matrix Reloaded",
+    "description": "Based on Creative Coding - Grid example - Grid in Grid by Garrit Pixelkind https://codepen.io/pixelkind/pen/OJrMeaj"
+  },
+  {
     "file": "experiments/Matrix.js",
     "name": "Matrix",
     "description": "Based on Creative Coding - Grid example - Grid in Grid by Garrit Pixelkind https://codepen.io/pixelkind/pen/OJrMeaj"
