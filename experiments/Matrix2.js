@@ -3,7 +3,7 @@
 const size = 20;
 const gap = 20;
 let amount;
-// Array to remember all the runes
+// Array to remember all the runes/symbols
 let runes = [];
 
 // rgb(12, 54, 10);
@@ -66,6 +66,9 @@ function draw() {
 
 function windowResized() {
   amount = Math.floor(max(width, height) / (size + gap));
+  for (let i = 0; i < amount; i++) {
+   runes.push(drawElement(0));
+  }
   resizeCanvas(innerWidth, innerHeight);
   
 }
