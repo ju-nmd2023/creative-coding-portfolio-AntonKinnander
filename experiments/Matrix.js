@@ -4,10 +4,16 @@ const size = 20;
 const gap = 20;
 let amount;
 
+// rgb(12, 54, 10);
+// rgb(198, 246, 25);
+
 function setup() {
   createCanvas(innerWidth, innerHeight);
   amount = Math.floor(max(width, height) / (size + gap));
+  colorMode(RGB);
 }
+
+// Want to randomly offset positons (height) of each column
 
 function drawElement(counter) {
   push();
@@ -28,9 +34,9 @@ function drawElement(counter) {
 }
 
 function draw() {
-  background(255, 255, 255);
+  background(12, 54, 10);
   noFill();
-  stroke(0, 0, 0);
+  stroke(198, 246, 25);
   strokeWeight(1);
 
   const centerX = (width - size) / 2;
@@ -44,6 +50,7 @@ function draw() {
       }
       push();
       translate(xPosition, yPosition);
+      scale(1 + Math.random() * 0.4);
       drawElement(0);
       pop();
     }
