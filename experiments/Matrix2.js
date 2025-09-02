@@ -13,6 +13,7 @@ function setup() {
   createCanvas(innerWidth, innerHeight);
   windowResized();
   colorMode(RGB);
+  background(0);
 }
 
 // Want to randomly offset positons (height) of each column
@@ -31,9 +32,9 @@ function drawElement(randomSeed, runePixels, x, y) {
       const gridX = i % 5; // column position (0-4)
       const gridY = Math.floor(i / 5); // row position (0-4)
       
-      stroke(1, 207, 94, 255 * randomSeed - (10*Math.random()));
+      stroke(1, 207, 94, 255 * randomSeed - (100*Math.random()));
       strokeWeight(1.5 * randomSeed);
-      fill(1, 255, 50 - random(1, 50), 255* randomSeed - (10*Math.random()));
+      fill(1, 255, 50 - random(1, 50), 255* randomSeed - (100*Math.random()));
       
       square(gridX * s, gridY * s, s);
       pop();
@@ -43,16 +44,26 @@ function drawElement(randomSeed, runePixels, x, y) {
 }
 
 function draw() {
-  background(0);
+  background(0,0,0,255);
   noFill();
   strokeWeight(1);
 
   
   for (let rune of runes) {
+    if (rune.isVisible) {
       drawElement(rune.randomSeed, rune.runePixels, rune.x, rune.y);
       // times scale so the smaller ones (percieved in the back) move slower for parallax effect i think its called
-      rune.y += 5.5 * rune.scale;
+      rune.y += 4 + 3 * rune.scale;
+      // Very rarely redraw the rune to give even more matrixy effect
+      if (Math.random() < 0.01) {
+        rune.runePixels = Array.from({length: 25}, () => Math.random() < 0.5);
+      }
+      // reset postion to top after passing bottom in a random way
+      if (rune.y > height + 25) {
+        rune.y = -(250 + Math.random() * 200);
+      }
     }
+  }
     
   }
 
@@ -73,6 +84,8 @@ function windowResized() {
     randomSeed: Math.random(),
     // set of 25 random values between determining if a pixel in the rune is visible (each rune is 5x5 so 25 pixels)
     runePixels: Array.from({length: 25}, () => Math.random() < 0.5),
+    // 50% chance completly invisible
+    isVisible: Math.random() < 0.1,
   });
   }
 }
