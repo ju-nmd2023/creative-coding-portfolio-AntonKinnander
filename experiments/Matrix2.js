@@ -17,18 +17,15 @@ function setup() {
 
 // Want to randomly offset positons (height) of each column
 
-function drawElement(counter) {
-  push();
+function drawElement(randomSeed, runePixels, x, y) {
   const fields = 4;
   const s = size / fields;
-  const randomSeed = Math.random();
   scale(.8 + randomSeed);
-  translate(Math.random() * 2, Math.random() * 2);
-  for (let x = 0; x < fields; x++) {
-    for (let y = 0; y < fields; y++) {
+  translate(randomSeed * 2, randomSeed * 2);
+
       push();
-      noStroke();
-      if (Math.random() < 0.5) {
+      for (let i = 0; i < 25; i++) {
+        if (runePixels[i]) {
         stroke(1, 207, 94, 255 * randomSeed - (100*Math.random()));
         strokeWeight(1.5 * randomSeed);
         fill(1, 255, 50 - random(1, 50), 255* randomSeed - (100*Math.random()));
@@ -36,8 +33,6 @@ function drawElement(counter) {
       square(x * s, y * s, s);
       pop();
     }
-  }
-  pop();
 }
 
 function draw() {
@@ -46,36 +41,34 @@ function draw() {
   strokeWeight(1);
 
   
-  for (let x = -Math.floor(amount / 2); x < Math.ceil(amount / 2); x++) {
-    for (let y = -Math.floor(amount / 2); y < Math.ceil(amount / 2); y++) {
-      let xPosition = centerX + x * (size + gap);
-      let yPosition = centerY + y * (size + gap);
-      if (amount % 2 === 0) {
-        xPosition += size / 2;
-      }
+  for (let rune of runes) {
       push();
-      translate(xPosition, yPosition);
-      drawElement(0);
+      scale(rune.scale);
+      drawElement(rune.randomSeed, rune.runePixels, rune.x, rune.y);
       pop();
     }
   }
 
-  noLoop();
-}
 
 function windowResized() {
   const centerX = (width - size) / 2;
   const centerY = (height - size) / 2;
+  runes = [];
 
   amount = Math.floor(max(width, height) / (size + gap));
-  for (let i = 0; i < amount; i++) {
+  for (let x = -Math.floor(amount / 2); x < Math.ceil(amount / 2); x++) {
+    for (let y = -Math.floor(amount / 2); y < Math.ceil(amount / 2); y++) {
+    
    runes.push({
     x: centerX + x * (size + gap),
     y: centerY + y * (size + gap),
-    scale: 0.8 + Math.random(),
-    element: drawElement(0),
+    scale: 0.5 + Math.random(),
+    randomSeed: Math.random(),
+    // set of 25 random values between determining if a pixel in the rune is visible (each rune is 5x5 so 25 pixels)
+    runePixels: Array.from({length: 25}, () => Math.random() < 0.5),
   });
   }
+}
   resizeCanvas(innerWidth, innerHeight);
   
 }
