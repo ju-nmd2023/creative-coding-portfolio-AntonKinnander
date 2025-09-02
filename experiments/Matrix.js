@@ -36,7 +36,7 @@ function drawElement(counter) {
 function draw() {
   background(12, 54, 10);
   noFill();
-  stroke(198, 246, 25);
+  stroke(255, 165, 0);
   strokeWeight(1);
 
   const centerX = (width - size) / 2;
