@@ -1,13 +1,24 @@
 [
   {
-    "file": "experiments/Matrix2.js",
-    "name": "The Matrix Reloaded",
-    "description": "Based on Creative Coding - Grid example - Grid in Grid by Garrit Pixelkind https://codepen.io/pixelkind/pen/OJrMeaj"
-  },
-  {
     "file": "experiments/Matrix.js",
     "name": "Matrix",
     "description": "Based on Creative Coding - Grid example - Grid in Grid by Garrit Pixelkind https://codepen.io/pixelkind/pen/OJrMeaj"
+  },
+  {
+    "file": "experiments/Matrix2.js",
+    "name": "Matrix 2: The Matrix Reloaded",
+    "description": "Based on Creative Coding - Grid example - Grid in Grid by Garrit Pixelkind https://codepen.io/pixelkind/pen/OJrMeaj"
+  },
+  
+  {
+    "file": "experiments/anne.js",
+    "name": "Anne",
+    "description": "Recreation of the Anne by Georg Nees. I notice now its actually titled 'Werkstatt Edition Kroll'"
+  },
+  {
+    "file": "experiments/anneV2.js",
+    "name": "Anne V2",
+    "description": "Recreation of the Anne by Georg Nees. Epic random version'"
   },
   {
     "file": "experiments/examplelecturenoise2.js",
@@ -18,15 +29,5 @@
     "file": "experiments/examplelecture.js",
     "name": "Example Lecture",
     "description": "Just a example file to show how the portfolio should work. Lecture based experiment"
-  },
-  {
-    "file": "experiments/anne.js",
-    "name": "Anne",
-    "description": "Recreation of the Anne by Georg Nees. I notice now its actually titled 'Werkstatt Edition Kroll'"
-  },
-  {
-    "file": "experiments/anneV2.js",
-    "name": "Anne V2",
-    "description": "Recreation of the Anne by Georg Nees. Epic random version'"
   }
 ]
