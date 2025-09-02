@@ -19,12 +19,15 @@ function drawElement(counter) {
   push();
   const fields = 4;
   const s = size / fields;
+  scale(.8 + Math.random());
   for (let x = 0; x < fields; x++) {
     for (let y = 0; y < fields; y++) {
       push();
       noStroke();
       if (Math.random() < 0.5) {
-        fill(0, 0, 0);
+        stroke(198, 246, 25);
+        strokeWeight(0);
+        fill(198, 246, 25, 255*Math.random());
       }
       square(x * s, y * s, s);
       pop();
@@ -36,7 +39,6 @@ function drawElement(counter) {
 function draw() {
   background(12, 54, 10);
   noFill();
-  stroke(255, 165, 0);
   strokeWeight(1);
 
   const centerX = (width - size) / 2;
@@ -50,7 +52,6 @@ function draw() {
       }
       push();
       translate(xPosition, yPosition);
-      scale(1 + Math.random() * 0.4);
       drawElement(0);
       pop();
     }

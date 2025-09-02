@@ -1,5 +1,10 @@
 [
   {
+    "file": "experiments/Matrix.js",
+    "name": "Matrix",
+    "description": "Based on Creative Coding - Grid example - Grid in Grid by Garrit Pixelkind https://codepen.io/pixelkind/pen/OJrMeaj"
+  },
+  {
     "file": "experiments/examplelecturenoise2.js",
     "name": "Example",
     "description": "Just a example file to show how the portfolio should work"
@@ -8,11 +13,6 @@
     "file": "experiments/examplelecture.js",
     "name": "Example Lecture",
     "description": "Just a example file to show how the portfolio should work. Lecture based experiment"
-  },
-  {
-    "file": "experiments/Matrix.js",
-    "name": "Matrix",
-    "description": "Based on Creative Coding - Grid example - Grid in Grid by Garrit Pixelkind https://codepen.io/pixelkind/pen/OJrMeaj"
   },
   {
     "file": "experiments/anne.js",
