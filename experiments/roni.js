@@ -4,6 +4,8 @@
 // 1. Grid of squares - square with full corner radius looks like a circle
 // 2. Spiral pattern - use the mathematical function of a spiral? Then figure out what value i need to control to rotate it
 
+// Spiral formulas https://mathworld.wolfram.com/Spiral.html
+
 const gap = 7.5;
 let size;
 const gridSize = 7;
