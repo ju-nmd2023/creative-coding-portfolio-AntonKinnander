@@ -6,36 +6,36 @@
 
 const gap = 5;
 let size;
-const countPerRow = 7;
+const gridSize = 7;
 
 function setup() {
     createCanvas(innerWidth, innerHeight);
     windowResized();
     colorMode(RGB);
     background(250);
-    rectMode(CENTER);
+    // rectMode(CENTER);
     noStroke();
     
   }
 
 function draw() {
-//  center canvas
-// translate(-width / 2, -height / 2);
- 
-//  center drawing 
-beginShape();
-// translate(size * countPerRow + gap * (countPerRow - 1) / 2, size * countPerRow + gap * (countPerRow - 1) / 2);
- for (let x = 0; x < countPerRow; x++) {
-    for (let y = 0; y < countPerRow; y++) {
-        push();
-        fill(255,60,60);
-        translate(x * (size + (gap)), y * (size + (gap)));
-        square(0, 0, size);
-        pop();
+    const gridWidth = gridSize * size + (gridSize - 1) * gap;
+    const gridHeight = gridSize * size + (gridSize - 1) * gap;
+    
+    // Center w/o translate
+    const startX = (width - gridWidth) / 2;
+    const startY = (height - gridHeight) / 2;
+    
+    for (let x = 0; x < gridSize; x++) {
+        for (let y = 0; y < gridSize; y++) {
+            push();
+            fill(255, 60, 60);
+            translate(startX + x * (size + gap), startY + y * (size + gap));
+            square(0, 0, size);
+            pop();
+        }
     }
- }
 }
-endShape();
 
 function windowResized() {
     resizeCanvas(innerWidth, innerHeight);
