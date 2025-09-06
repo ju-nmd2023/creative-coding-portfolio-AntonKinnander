@@ -1,5 +1,10 @@
 [
   {
+    "file": "experiments/roni.js",
+    "name": "Roni",
+    "description": "Recreation of Roni Kaufmans artwork featuring a grid of squares with a rotating rainbow spiral + square corner radius increasing and decreasing in the same spiral shape"
+  },
+  {
     "file": "experiments/Matrix.js",
     "name": "Matrix",
     "description": "Based on Creative Coding - Grid example - Grid in Grid by Garrit Pixelkind https://codepen.io/pixelkind/pen/OJrMeaj"
