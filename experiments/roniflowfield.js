@@ -1,5 +1,6 @@
 // Recreation of Roni Kaufmans artwork Digital Impressionism featuring rectangles that are placed along flowfields looking a little like a RGB dispplay upclose
-// FIrst recreation without the particles being animated
+// FIrst recreation without the particles being animated'
+//Also used this tutorial to understand flowfields https://dev.to/nyxtom/flow-fields-and-noise-algorithms-with-p5-js-5g67
 
 const red = [255, 0, 0];
 const green = [0, 255, 0];
