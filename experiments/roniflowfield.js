@@ -17,18 +17,16 @@ function setup() {
     for (let x = 0; x < width; x += spacing) {
       
 
-
-      
       const color = random([red, green, blue]);
       stroke(color);
 
       const angle = noise(x * noiseScale, y * noiseScale) * TWO_PI * 2;
 
       // Calculate start and end points
-      const x1 = x - (lineLength / 2) * cos(angle);
-      const y1 = y - (lineLength / 2) * sin(angle);
-      const x2 = x + (lineLength / 2) * cos(angle);
-      const y2 = y + (lineLength / 2) * sin(angle);
+      const x1 = x - (lineLength / 2) * cos(angle * Math.random()) ;
+      const y1 = y - (lineLength / 2) * sin(angle * Math.random()) ;
+      const x2 = x + (lineLength / 2) * cos(angle * Math.random()) ;
+      const y2 = y + (lineLength / 2) * sin(angle * Math.random()) ;
 
       line(x1, y1, x2, y2);
     }
@@ -38,4 +36,5 @@ function setup() {
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
+  setup();
 }
