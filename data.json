@@ -1,8 +1,8 @@
 [
   {
-    "file": "experiments/roni.js",
+    "file": "experiments/roniflowfield.js",
     "name": "Roni",
-    "description": "Recreation of Roni Kaufmans artwork featuring a grid of squares with a rotating rainbow spiral + square corner radius increasing and decreasing in the same spiral shape"
+    "description": "Recreation of Roni Kaufmans artwork Digital Impressionism"
   },
   {
     "file": "experiments/Matrix.js",
