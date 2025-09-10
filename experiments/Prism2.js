@@ -6,7 +6,10 @@
 //Point d is always 0.5 so it doesnt get too crazy
 
 
-const m = 200; //margin
+let mt;
+let mb;
+let ms;
+
 const depthLimit = 3; // how many subdivisions // how deep it will look
 let dividePoint; // 0.5 makes it perfect, other values introduce randomness > 0.5 - smaller triangles to sides, < 0.5 - larger triangles to sides
 
@@ -22,16 +25,23 @@ const gradients = [
 let triangles = [];
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+createCanvas(windowWidth, windowHeight);
+
+mt = height/ (6 + 2);
+  mb = height/ (6 - 2);
+  ms = width/6;
+
+
   pixelDensity(1); // Makes stroke sharper
   strokeCap(ROUND);
   strokeJoin(ROUND);
   strokeWeight(0);
+  
   noLoop();
   // noFill();
-
-
   generateTriangles();
+
+ 
 }
 
 function draw() {
@@ -104,16 +114,16 @@ class Triangle {
 function generateTriangles() {
 
   triangles = [];
-  //m for margin
+
   const triangle1 = new Triangle(
-    [0 + m, 0 + m],
-    [width - m, 0 + m],
-    [0 + m, height - m]
+    [0 + ms, 0 + mt],
+    [width - ms, 0 + mt],
+    [0 + ms, height - mb]
   );
   const triangle2 = new Triangle(
-    [width - m, height -m],
-    [0 + m, height -m],
-    [width -m, 0 + m]
+    [width - ms, height - mb],
+    [0 + ms, height - mb],
+    [width - ms, 0 + mt]
   );
 
   grow(triangle1, 0);
