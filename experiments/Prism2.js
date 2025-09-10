@@ -11,7 +11,7 @@ let mb;
 let ms;
 
 const depthLimit = 3; // how many subdivisions // how deep it will look
-let dividePoint; // 0.5 makes it perfect, other values introduce randomness > 0.5 - smaller triangles to sides, < 0.5 - larger triangles to sides
+let dividePoint; // moved to be able to randomize - 0.5 makes it perfect, other values introduce randomness > 0.5 - smaller triangles to sides, < 0.5 - larger triangles to sides
 
 
 const gradients = [
@@ -50,9 +50,16 @@ function draw() {
   // cream background
   background(255,245,230); 
 
-
+  let isDone = false;
   for (const triangle of triangles) {
+    if (triangles.indexOf(triangle) < triangles.length) {
     triangle.draw();
+  }
+  if ((triangles.indexOf(triangle)+1 === triangles.length) && !isDone) {
+    // blendMode(LIGHTEN);
+    noiseOverlay();
+    isDone = true;
+}
   }
 }
 
@@ -168,6 +175,18 @@ function longestSideWithOpposite(side1, side2, side3) {
 function lerpPoints(pointA, pointB, interpolation) {
   return [pointA[0] + (pointB[0] - pointA[0]) * interpolation, pointA[1] + (pointB[1] - pointA[1]) * interpolation];
 }
+
+function noiseOverlay() {
+  for (let x = 0; x < width; x++ ) {
+    for (let y = 0; y < height; y++ ) {
+      if (Math.random() > 0.9) {
+        fill(0);
+        circle(x, y, 1);
+      }
+    }
+  }
+}
+
 
 function windowResized() {
   resizeCanvas(innerWidth, innerHeight);
