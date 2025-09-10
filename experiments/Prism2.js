@@ -26,15 +26,14 @@ const gradients = [
 let triangles = [];
 
 function setup() {
-createCanvas(windowWidth, windowHeight);
+  createCanvas(windowWidth, windowHeight);
 
-mt = 20;
+  mt = 20;
   mb = 20;
   ms = 20;
-// mt = height/ (6 + 2);
-//   mb = height/ (6 - 2);
-//   ms = width/5;
-
+  // mt = height/ (6 + 2);
+  //   mb = height/ (6 - 2);
+  //   ms = width/5;
 
   pixelDensity(1); // Makes stroke sharper
   strokeCap(ROUND);
@@ -43,25 +42,25 @@ mt = 20;
   // noLoop();
   // noFill();
   generateTriangles();
-
- 
+  isDone = false; // Reset isDone when generating new triangles
 }
 
 function draw() {
   // cream background
   background(255,245,230); 
-
   
-  
-  for (const triangle of triangles) {
-    triangle.draw();
+  // Draw all triangles first
+  for (let i = 0; i < triangles.length; i++) {
+    triangles[i].draw();
+    if ((i === triangles.length - 1) && !isDone) {
+      // Only add noise overlay after all triangles are drawn and if we haven't done it yet
+      blendMode(ADD);
+      // opacity(0.999);
+      noiseOverlay();
+      isDone = true;
+      noLoop();
+    }
   }
- 
-  if (!isDone) {
-    // blendMode(LIGHTEN);
-    noiseOverlay();
-  }
-  
 }
 
 
@@ -178,10 +177,11 @@ function lerpPoints(pointA, pointB, interpolation) {
 }
 
 function noiseOverlay() {
-  for (let x = 0; x < width; x++ ) {
-    for (let y = 0; y < height; y++ ) {
-      if (Math.random() > 0.9) {
-        fill(0);
+  for (let x = 0; x < width; x+=1 ) {
+    for (let y = 0; y < height; y+=1 ) {
+      if (Math.random() > 0.5) {
+        // fill(128,128,128,Math.min(Math.random() * 100, 90));
+        fill(128,128,128,random(5,20));
         circle(x, y, 1);
       }
     }
