@@ -9,6 +9,7 @@
 let mt;
 let mb;
 let ms;
+let isDone = false;
 
 const depthLimit = 3; // how many subdivisions // how deep it will look
 let dividePoint; // moved to be able to randomize - 0.5 makes it perfect, other values introduce randomness > 0.5 - smaller triangles to sides, < 0.5 - larger triangles to sides
@@ -50,17 +51,17 @@ function draw() {
   // cream background
   background(255,245,230); 
 
-  let isDone = false;
+  
+  
   for (const triangle of triangles) {
-    if (triangles.indexOf(triangle) < triangles.length) {
     triangle.draw();
   }
-  if ((triangles.indexOf(triangle)+1 === triangles.length) && !isDone) {
+ 
+  if (!isDone) {
     // blendMode(LIGHTEN);
     noiseOverlay();
-    isDone = true;
-}
   }
+  
 }
 
 
@@ -185,6 +186,7 @@ function noiseOverlay() {
       }
     }
   }
+  isDone = true;
 }
 
 
