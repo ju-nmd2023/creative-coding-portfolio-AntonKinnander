@@ -1,5 +1,5 @@
 // Recreation of this prsim type art made by Tezumie using P5.js https://www.reddit.com/r/generative/comments/1n51jga/sketch_made_with_p5js/?show=original 
-// with help from this video for gradients
+// with help from this video for gradients https://www.youtube.com/watch?v=-MUOweQ6wac
 // and this article to learn triangle subdivision  - https://www.tylerxhobbs.com/words/aesthetically-pleasing-triangle-subdivision
 
 // Basically im starting with a square and dividing it into triangles then those into further smaller randomness but with randomness for where the points get placed. 
@@ -14,18 +14,21 @@ let triangles = [];
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  
   pixelDensity(1); // Makes stroke sharper
   stroke(0);
+  strokeCap(ROUND);
+  strokeJoin(ROUND);
   strokeWeight(1);
   noFill();
-
+// For easier gradients
   colorMode(HSB, 360, 100, 100, 100);
 
   generateTriangles();
 }
 
 function draw() {
-  background(255); 
+  background(0); 
 
 
   for (const triangle of triangles) {
@@ -67,6 +70,8 @@ class Triangle {
 
 // Create two triangles as a starting point
 function generateTriangles() {
+
+  //From gradient example on youtube
   let gradient = drawingContext.createLinearGradient(
     width/2-200, height/2-200, width/2+200, height/2+200
     );
