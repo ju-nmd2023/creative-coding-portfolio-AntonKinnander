@@ -27,17 +27,19 @@ let triangles = [];
 function setup() {
 createCanvas(windowWidth, windowHeight);
 
-mt = height/ (6 + 2);
-  mb = height/ (6 - 2);
-  ms = width/6;
+mt = 20;
+  mb = 20;
+  ms = 20;
+// mt = height/ (6 + 2);
+//   mb = height/ (6 - 2);
+//   ms = width/5;
 
 
   pixelDensity(1); // Makes stroke sharper
   strokeCap(ROUND);
   strokeJoin(ROUND);
   strokeWeight(0);
-  
-  noLoop();
+  // noLoop();
   // noFill();
   generateTriangles();
 
@@ -72,7 +74,7 @@ class Triangle {
   }
 
   draw() {
-  
+    randomSeed(1);
     const gradientSize = random(20, 200);
     let gradient = drawingContext.createLinearGradient(
       this.center[0] - gradientSize, this.center[1] - gradientSize,

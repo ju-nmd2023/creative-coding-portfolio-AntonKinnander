@@ -1,5 +1,16 @@
 const nextButton = document.getElementById("next");
 const prevButton = document.getElementById("prev");
+const toggleButton = document.getElementById("toggle-sections");
+const header = document.getElementById("header");
+const mainSection = document.querySelector("main");
+let sectionsVisible = true;
+
+toggleButton.addEventListener("click", () => {
+  sectionsVisible = !sectionsVisible;
+  header.classList.toggle("hidden");
+  mainSection.classList.toggle("hidden");
+  toggleButton.classList.toggle("active");
+});
 const githubLink = document.getElementById("github");
 const nameText = document.getElementById("name");
 const descriptionText = document.getElementById("description");
