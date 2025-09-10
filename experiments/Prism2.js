@@ -6,28 +6,37 @@
 //Point d is always 0.5 so it doesnt get too crazy
 
 
-const m = 10; //margin
-const depthLimit= 6; // how many subdivisions // how deep it will look
-const dividePoint = 0.6; // 0.5 makes it perfect, other values introduce randomness > 0.5 - smaller triangles to sides, < 0.5 - larger triangles to sides
+const m = 200; //margin
+const depthLimit = 3; // how many subdivisions // how deep it will look
+let dividePoint; // 0.5 makes it perfect, other values introduce randomness > 0.5 - smaller triangles to sides, < 0.5 - larger triangles to sides
+
+
+const gradients = [
+  { start: [15, 95, 75], end: [9, 21, 47], },
+  { start: [51, 139, 194], end: [229, 199, 208], },
+  { start: [220, 120, 102], end: [244, 209, 154], },
+  // { start: [38, 126, 39], end: [190, 201, 10], },
+  // { start: [38, 126, 39], end: [190, 201, 10], },
+];
 
 let triangles = [];
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
   pixelDensity(1); // Makes stroke sharper
-  stroke(0);
   strokeCap(ROUND);
   strokeJoin(ROUND);
-  strokeWeight(1);
-  noFill();
-// For easier gradients
-  colorMode(HSB, 360, 100, 100, 100);
+  strokeWeight(0);
+  noLoop();
+  // noFill();
+
 
   generateTriangles();
 }
 
 function draw() {
-  background(0); 
+  // cream background
+  background(255,245,230); 
 
 
   for (const triangle of triangles) {
@@ -42,19 +51,31 @@ class Triangle {
     this.side1 = side1;
     this.side2 = side2;
     this.side3 = side3;
+    
+    // Select a random gradient
+    this.gradient = random(gradients);
+    
+    this.center = [
+      (side1[0] + side2[0] + side3[0]) / 3,
+      (side1[1] + side2[1] + side3[1]) / 3
+    ];
   }
 
   draw() {
-  //From gradient example on youtube
- let gradient = drawingContext.createLinearGradient(
-  width/2-200, height/2-200, width/2+200, height/2+200
-  );
-  gradient.addColorStop(0, color(frameCount % 360, 100, 100, 100));
-  gradient.addColorStop(1, color((frameCount + 180) % 360, 100,100, 100));
   
-  drawingContext.strokeStyle = gradient;
-  strokeWeight(10);
+    const gradientSize = random(20, 200);
+    let gradient = drawingContext.createLinearGradient(
+      this.center[0] - gradientSize, this.center[1] - gradientSize,
+      this.center[0] + gradientSize, this.center[1] + gradientSize
+    );
 
+  //Wanna try randomize direction here
+    const [h1, s1, b1] = this.gradient.start;
+    const [h2, s2, b2] = this.gradient.end;
+    gradient.addColorStop(0, color(h1, s1, b1));
+    gradient.addColorStop(1, color(h2, s2, b2));
+
+    drawingContext.fillStyle = gradient;
 
     triangle(
       this.side1[0], this.side1[1],
@@ -64,6 +85,7 @@ class Triangle {
   }
 
   subdivide() {
+    dividePoint = 0.2 + 0.4 * Math.random();
     const { pointA, pointB, opposite } = longestSideWithOpposite(
       this.side1,
       this.side2,
@@ -82,16 +104,16 @@ class Triangle {
 function generateTriangles() {
 
   triangles = [];
-  
+  //m for margin
   const triangle1 = new Triangle(
-    [0, 0],
-    [width, 0],
-    [0, height]
+    [0 + m, 0 + m],
+    [width - m, 0 + m],
+    [0 + m, height - m]
   );
   const triangle2 = new Triangle(
-    [width, height],
-    [0, height],
-    [width, 0]
+    [width - m, height -m],
+    [0 + m, height -m],
+    [width -m, 0 + m]
   );
 
   grow(triangle1, 0);
@@ -139,4 +161,5 @@ function windowResized() {
   resizeCanvas(innerWidth, innerHeight);
   clear();
   setup();
+  draw();
 }
