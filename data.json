@@ -1,8 +1,8 @@
 [
   {
-    "file": "experiments/roniflowfield2.js",
-    "name": "Roni",
-    "description": "Recreation of Roni Kaufmans artwork Digital Impressionism"
+    "file": "experiments/Prism1.js",
+    "name": "Prism - v1",
+    "description": "Recreation of this prsim type art made by Tezumie using P5.js https://www.reddit.com/r/generative/comments/1n51jga/sketch_made_with_p5js/?show=original  with help from this video for gradients and this article to learn triangle subdivision https://www.tylerxhobbs.com/words/aesthetically-pleasing-triangle-subdivision Calling this version 1"
   },
   {
     "file": "experiments/Matrix.js",
