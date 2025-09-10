@@ -14,7 +14,6 @@ let triangles = [];
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  
   pixelDensity(1); // Makes stroke sharper
   stroke(0);
   strokeCap(ROUND);
@@ -46,6 +45,17 @@ class Triangle {
   }
 
   draw() {
+  //From gradient example on youtube
+ let gradient = drawingContext.createLinearGradient(
+  width/2-200, height/2-200, width/2+200, height/2+200
+  );
+  gradient.addColorStop(0, color(frameCount % 360, 100, 100, 100));
+  gradient.addColorStop(1, color((frameCount + 180) % 360, 100,100, 100));
+  
+  drawingContext.strokeStyle = gradient;
+  strokeWeight(10);
+
+
     triangle(
       this.side1[0], this.side1[1],
       this.side2[0], this.side2[1],
@@ -70,17 +80,6 @@ class Triangle {
 
 // Create two triangles as a starting point
 function generateTriangles() {
-
-  //From gradient example on youtube
-  let gradient = drawingContext.createLinearGradient(
-    width/2-200, height/2-200, width/2+200, height/2+200
-    );
-    gradient.addColorStop(0, color(310, 100, 100, 100));
-    gradient.addColorStop(1, color(250, 100,100, 100));
-    
-    drawingContext.strokeStyle = gradient;
-    strokeWeight(10);
-
 
   triangles = [];
   
