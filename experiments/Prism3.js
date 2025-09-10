@@ -11,26 +11,29 @@ let mb;
 let ms;
 let isDone = false;
 
-const depthLimit = 3; // how many subdivisions // how deep it will look
+const depthLimit = 4; // how many subdivisions // how deep it will look
 let dividePoint; // moved to be able to randomize - 0.5 makes it perfect, other values introduce randomness > 0.5 - smaller triangles to sides, < 0.5 - larger triangles to sides
 
+const slateGrey = { start: [15, 95, 75], end: [9, 21, 47], };
+const skyBlue = { start: [51, 139, 194], end: [229, 199, 208], };
 
-const gradients = [
-  { start: [15, 95, 75], end: [9, 21, 47], },
-  { start: [51, 139, 194], end: [229, 199, 208], },
-  { start: [220, 120, 102], end: [244, 209, 154], },
-  // { start: [38, 126, 39], end: [190, 201, 10], },
-  // { start: [38, 126, 39], end: [190, 201, 10], },
-];
+
+// const gradients = [
+//   { start: [15, 95, 75], end: [9, 21, 47], },
+//   { start: [51, 139, 194], end: [229, 199, 208], },
+//   { start: [220, 120, 102], end: [244, 209, 154], },
+//   // { start: [38, 126, 39], end: [190, 201, 10], },
+//   // { start: [38, 126, 39], end: [190, 201, 10], },
+// ];
 
 let triangles = [];
 
 function setup() {
 createCanvas(windowWidth, windowHeight);
 
-mt = 20;
-  mb = 20;
-  ms = 20;
+mt = 0;
+  mb = 0;
+  ms = 0;
 // mt = height/ (6 + 2);
 //   mb = height/ (6 - 2);
 //   ms = width/5;
@@ -72,13 +75,33 @@ class Triangle {
     this.side2 = side2;
     this.side3 = side3;
     
-    // Select a random gradient
-    this.gradient = random(gradients);
-    
     this.center = [
       (side1[0] + side2[0] + side3[0]) / 3,
       (side1[1] + side2[1] + side3[1]) / 3
     ];
+
+    this.gradient = this.determineGradient();
+  }
+
+  determineGradient() {
+    let bottomPoints = 0;
+    let sidePoints = 0;
+
+    // Check each point
+    const points = [this.side1, this.side2, this.side3];
+    for (const point of points) {
+      // Check bottom intersection
+      if (Math.abs(point[1] - height) < 1) {
+        bottomPoints++;
+      }
+      // Check sides
+      else if (Math.abs(point[0]) < 1 || Math.abs(point[0] - width) < 1) {
+        sidePoints++;
+      }
+    }
+
+   
+    return (bottomPoints >= 1 && sidePoints <= 1) ? slateGrey : skyBlue;
   }
 
   draw() {
