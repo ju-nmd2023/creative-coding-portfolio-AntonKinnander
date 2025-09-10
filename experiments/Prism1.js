@@ -3,11 +3,11 @@
 // and this article to learn triangle subdivision  - https://www.tylerxhobbs.com/words/aesthetically-pleasing-triangle-subdivision
 
 // Basically im starting with a square and dividing it into triangles then those into further smaller randomness but with randomness for where the points get placed. 
-//Point d is always 0.5 so it doesnt get to crazy
+//Point d is always 0.5 so it doesnt get too crazy
 
 
 const m = 10; //margin
-const depthLimit= 6; // subdivision levels
+const depthLimit= 6; // how many subdivisions // how deep it will look
 const dividePoint = 0.6; // 0.5 makes it perfect, other values introduce randomness > 0.5 - smaller triangles to sides, < 0.5 - larger triangles to sides
 
 let triangles = [];
@@ -25,27 +25,13 @@ function setup() {
 function draw() {
   background(255); 
 
-  const scaleFactor = Math.min((width - 2 * m) / 2, (height - 2 * m) / 2);
-  
-  // Debug info
-  console.log(`Canvas: ${width}x${height}, Scale: ${scaleFactor}, Triangles: ${triangles.length}`);
-
-  push();
-  translate(width / 2, height / 2);
-  scale(1, -1);
 
   for (const triangle of triangles) {
-    triangle.draw(scaleFactor);
+    triangle.draw();
   }
-  pop();
 }
 
-// Add a function to manually trigger redraw for testing
-function keyPressed() {
-  if (key === ' ') {
-    redraw();
-  }
-}
+
 
 class Triangle {
   constructor(side1, side2, side3) {
@@ -54,16 +40,12 @@ class Triangle {
     this.side3 = side3;
   }
 
-  draw(scale) {
-    const [x1, y1] = this.screen(this.side1, scale);
-    const [x2, y2] = this.screen(this.side2, scale);
-    const [x3, y3] = this.screen(this.side3, scale);
-
-    triangle(x1, y1, x2, y2, x3, y3);
-  }
-
-  screen([width, height], scale) {
-    return [width * scale, height * scale];
+  draw() {
+    triangle(
+      this.side1[0], this.side1[1],
+      this.side2[0], this.side2[1],
+      this.side3[0], this.side3[1]
+    );
   }
 
   subdivide() {
@@ -81,12 +63,20 @@ class Triangle {
   }
 }
 
-// to make the math🤮 easier i scale this up but use 1 as the base unit
+// Create two triangles as a starting point
 function generateTriangles() {
   triangles = [];
-
-  const triangle1 = new Triangle([-1, 1], [1, 1], [-1, -1], 0);
-  const triangle2 = new Triangle([1, -1], [-1, -1], [1, 1], 0);
+  
+  const triangle1 = new Triangle(
+    [0, 0],
+    [width, 0],
+    [0, height]
+  );
+  const triangle2 = new Triangle(
+    [width, height],
+    [0, height],
+    [width, 0]
+  );
 
   grow(triangle1, 0);
   grow(triangle2, 0);
@@ -111,25 +101,26 @@ function distanceSquared(pointA, pointB) {
 // Gets the longest side of a triangle and returns its two points along with the opposite point in 
 // order to split the triangle into two smaller triangles
 function longestSideWithOpposite(side1, side2, side3) {
-  const distance12 = distanceSquared(side1, side2);
-  const distance23 = distanceSquared(side2, side3);
-  const distance31 = distanceSquared(side3, side1);
+  const d12 = distanceSquared(side1, side2);
+  const d23 = distanceSquared(side2, side3);
+  const d31 = distanceSquared(side3, side1);
 
-  if (distance12 >= distance23 && distance12 >= distance31) {
+
+  if (d12 >= d23 && d12 >= d31) {
     return { pointA: side1, pointB: side2, opposite: side3 };
-  } else if (distance23 >= distance12 && distance23 >= distance31) {
+  } else if (d23 >= d12 && d23 >= d31) {
     return { pointA: side2, pointB: side3, opposite: side1 };
   } else {
     return { pointA: side3, pointB: side1, opposite: side2 };
   }
 }
 
-// Calculates a point between pointA and pointB based on interpolation value (0 = pointA, 1 = pointB)
 function lerpPoints(pointA, pointB, interpolation) {
   return [pointA[0] + (pointB[0] - pointA[0]) * interpolation, pointA[1] + (pointB[1] - pointA[1]) * interpolation];
 }
 
 function windowResized() {
   resizeCanvas(innerWidth, innerHeight);
-  draw();
+  clear();
+  setup();
 }
