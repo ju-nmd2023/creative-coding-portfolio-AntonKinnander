@@ -14,9 +14,27 @@ let isDone = false;
 const depthLimit = 4; // how many subdivisions // how deep it will look
 let dividePoint; // moved to be able to randomize - 0.5 makes it perfect, other values introduce randomness > 0.5 - smaller triangles to sides, < 0.5 - larger triangles to sides
 
-const slateGrey = { start: [15, 95, 75], end: [9, 21, 47], };
-const skyBlue = { start: [51, 139, 194], end: [229, 199, 208], };
+// const slateGrey = { start: [15, 95, 75], end: [9, 21, 47], };
+// const skyBlue = { start: [51, 139, 194], end: [187 , 184, 203], };
+// const sunsetOrange = { start: [220, 120, 102], end: [244, 209, 154], };
+// const cloudWhite = {start: [201,214,255], end: [226, 226, 226], };
 
+//Preconfigured palettes, 0 = ground, 1 = sky, 2 = sun, 3 = clouds
+const grassyMountains = [
+  { start: [15, 95, 75], end: [9, 21, 47], },
+  { start: [51, 139, 194], end: [229, 199, 208], },
+  { start: [220, 120, 102], end: [244, 209, 154], },
+  { start: [201,214,255], end: [226, 226, 226], },
+]
+const redDesert = [
+  { start: [220, 120, 102], end: [244, 209, 154], },
+  { start: [201,214,255], end: [226, 226, 226], },
+  { start: [15, 95, 75], end: [9, 21, 47], },
+  { start: [51, 139, 194], end: [229, 199, 208], },
+]
+
+const gradients = [grassyMountains, redDesert];
+const activeGradient = gradients[Math.floor(Math.random() * gradients.length)];
 
 // const gradients = [
 //   { start: [15, 95, 75], end: [9, 21, 47], },
@@ -86,22 +104,44 @@ class Triangle {
   determineGradient() {
     let bottomPoints = 0;
     let sidePoints = 0;
+    let topPoints = 0;
+    let leftPoints = 0;
 
     // Check each point
     const points = [this.side1, this.side2, this.side3];
     for (const point of points) {
-      // Check bottom intersection
+      // Check bottom
       if (Math.abs(point[1] - height) < 1) {
         bottomPoints++;
       }
-      // Check sides
-      else if (Math.abs(point[0]) < 1 || Math.abs(point[0] - width) < 1) {
+ // Check top
+ else if (Math.abs(point[1]) < 1) {
+  topPoints++;
+} 
+
+      // Check left
+      if (Math.abs(point[0]) < 1) {
+        leftPoints++;
         sidePoints++;
       }
+      // Check sides
+      else if (Math.abs(point[0] - width) < 1) {
+        sidePoints++;
+      }
+     
     }
 
-   
-    return (bottomPoints >= 1 && sidePoints <= 1) ? slateGrey : skyBlue;
+
+    switch (true) {
+      case bottomPoints >= 1 && sidePoints <= 2:
+        return activeGradient[0];
+      case topPoints === 1 && leftPoints === 1:
+        return activeGradient[2];
+      case topPoints === 1 && sidePoints >= 0 && leftPoints <= 1 :
+        return activeGradient[3];
+      default:
+        return activeGradient[1];
+    }
   }
 
   draw() {
