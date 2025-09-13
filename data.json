@@ -1,11 +1,11 @@
 [
   {
-    "file": "experiments/Prism2.js",
-    "name": "Prism - v1",
-    "description": "Recreation of Tyler Hobbs triangle subdivision algorithm, version inspired by a prism artwork by Tezumie on reddit"
+    "file": "experiments/Prism3.js",
+    "name": "Shattered World",
+    "description": "Deep title, deep message, Art. Recreation of Tyler Hobbs triangle subdivision algorithm, version inspired by a prism artwork by Tezumie on reddit"
   },
   {
-    "file": "experiments/Prism3.js",
+    "file": "experiments/Prism2.js",
     "name": "Prism - v2",
     "description": "Another version with triangle subdivison, made to look like a mountainous landscape scene"
   },

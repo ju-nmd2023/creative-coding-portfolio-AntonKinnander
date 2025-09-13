@@ -30,6 +30,22 @@ const redDesert = [
   { start: [255, 75, 31], end: [255, 144, 104], },
   { start: [157, 138, 150], end: [118, 115, 132], },
 ]
+// Mountains
+const grayMountains = [
+  { start: [188,157,165], end: [84, 94, 116], },
+  { start: [51, 139, 194], end: [229, 199, 208], },
+  { start: [220, 120, 102], end: [244, 209, 154], },
+  { start: [201,214,255], end: [226, 226, 226], },
+]
+
+// Windows XP Bliss 
+const windowsXP = [
+  { start: [175,255,70], end: [39, 72, 12], },
+  { start: [152, 205, 250], end: [25, 120, 248], },
+  { start: [255, 239, 134], end: [254, 191, 62], },
+  { start: [255,255,255], end: [167, 203, 253], },
+]
+
 // const redDesert = [
 //   { start: [220, 120, 102], end: [244, 209, 154], },
 //   { start: [201,214,255], end: [226, 226, 226], },
@@ -37,7 +53,7 @@ const redDesert = [
 //   { start: [51, 139, 194], end: [229, 199, 208], },
 // ]
 
-const gradients = [grassyMountains, redDesert];
+const gradients = [grassyMountains, redDesert, grayMountains, windowsXP];
 const activeGradient = gradients[Math.floor(Math.random() * gradients.length)];
 
 // const gradients = [
