@@ -5,9 +5,7 @@
 // Basically im starting with a square and dividing it into triangles then those into further smaller randomness but with randomness for where the points get placed.
 //Point d is always 0.5 so it doesnt get too crazy
 
-let mt;
-let mb;
-let ms;
+let m;
 let isDone = false;
 
 const depthLimit = 4; // how many subdivisions // how deep it will look
@@ -26,13 +24,35 @@ const grassyMountains = [
   { start: [201, 214, 255], end: [226, 226, 226] },
 ];
 const redDesert = [
-  { start: [209, 145, 60], end: [255, 209, 148] },
+  { start: [255, 197, 147], end: [255, 232, 206] },
+  { start: [188, 157, 165], end: [84, 94, 116] },
+  { start: [255, 75, 31], end: [255, 144, 104] },
+  { start: [157, 138, 150], end: [118, 115, 132] },
+];
+// Mountains
+const grayMountains = [
+  { start: [188, 157, 165], end: [84, 94, 116] },
   { start: [51, 139, 194], end: [229, 199, 208] },
-  { start: [248, 80, 50], end: [231, 57, 39] },
-  { start: [236, 111, 102], end: [226, 226, 226] },
+  { start: [220, 120, 102], end: [244, 209, 154] },
+  { start: [201, 214, 255], end: [226, 226, 226] },
 ];
 
-const gradients = [grassyMountains, redDesert];
+// Windows XP Bliss
+const windowsXP = [
+  { start: [175, 255, 70], end: [39, 72, 12] },
+  { start: [152, 205, 250], end: [25, 120, 248] },
+  { start: [255, 239, 134], end: [254, 191, 62] },
+  { start: [255, 255, 255], end: [167, 203, 253] },
+];
+
+// const redDesert = [
+//   { start: [220, 120, 102], end: [244, 209, 154], },
+//   { start: [201,214,255], end: [226, 226, 226], },
+//   { start: [15, 95, 75], end: [9, 21, 47], },
+//   { start: [51, 139, 194], end: [229, 199, 208], },
+// ]
+
+const gradients = [grassyMountains, redDesert, grayMountains, windowsXP];
 const activeGradient = gradients[Math.floor(Math.random() * gradients.length)];
 
 // const gradients = [
@@ -48,9 +68,7 @@ let triangles = [];
 function setup() {
   createCanvas(windowWidth, windowHeight);
 
-  mt = 0;
-  mb = 0;
-  ms = 0;
+  m = 0;
   // mt = height/ (6 + 2);
   //   mb = height/ (6 - 2);
   //   ms = width/5;
@@ -182,14 +200,14 @@ function generateTriangles() {
   triangles = [];
 
   const triangle1 = new Triangle(
-    [0 + ms, 0 + mt],
-    [width - ms, 0 + mt],
-    [0 + ms, height - mb]
+    [0 + m, 0 + m],
+    [width - m, 0 + m],
+    [0 + m, height - m]
   );
   const triangle2 = new Triangle(
-    [width - ms, height - mb],
-    [0 + ms, height - mb],
-    [width - ms, 0 + mt]
+    [width - m, height - m],
+    [0 + m, height - m],
+    [width - m, 0 + m]
   );
 
   grow(triangle1, 0);
