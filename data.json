@@ -1,11 +1,11 @@
 [
   {
-    "file": "experiments/Prism2.js",
+    "file": "experiments/Prism3.js",
     "name": "Prism - v1",
     "description": "Recreation of Tyler Hobbs triangle subdivision algorithm, version inspired by a prism artwork by Tezumie on reddit"
   },
   {
-    "file": "experiments/Prism3.js",
+    "file": "experiments/Prism2.js",
     "name": "Prism - v2",
     "description": "Another version with triangle subdivison, made to look like a mountainous landscape scene"
   },
@@ -19,7 +19,7 @@
     "name": "Matrix 2: The Matrix Reloaded",
     "description": "Based on Creative Coding - Grid example - Grid in Grid by Garrit Pixelkind https://codepen.io/pixelkind/pen/OJrMeaj"
   },
-  
+
   {
     "file": "experiments/anne.js",
     "name": "Anne",
