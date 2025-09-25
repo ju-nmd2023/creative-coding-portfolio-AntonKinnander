@@ -1,5 +1,10 @@
 [
   {
+    "file": "experiments/PrismVisualizer.js",
+    "name": "Prism Visualizer",
+    "description": "Visualizer for Tone.JS based on the prism artworks. Midi music is converted to JSON for use with Tone.JS"
+  },
+  {
     "file": "experiments/Prism3.js",
     "name": "Shattered World",
     "description": "Deep title, deep message, Art. Recreation of Tyler Hobbs triangle subdivision algorithm, version inspired by a prism artwork by Tezumie on reddit"

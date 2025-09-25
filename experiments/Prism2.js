@@ -6,9 +6,7 @@
 //Point d is always 0.5 so it doesnt get too crazy
 
 
-let mt;
-let mb;
-let ms;
+let m;
 let isDone = false;
 
 const depthLimit = 3; // how many subdivisions // how deep it will look
@@ -28,13 +26,7 @@ let triangles = [];
 function setup() {
 createCanvas(windowWidth, windowHeight);
 
-mt = 20;
-  mb = 20;
-  ms = 20;
-// mt = height/ (6 + 2);
-//   mb = height/ (6 - 2);
-//   ms = width/5;
-
+m = 20;
 
   pixelDensity(1); // Makes stroke sharper
   strokeCap(ROUND);
@@ -126,14 +118,14 @@ function generateTriangles() {
   triangles = [];
 
   const triangle1 = new Triangle(
-    [0 + ms, 0 + mt],
-    [width - ms, 0 + mt],
-    [0 + ms, height - mb]
+    [0 + m, 0 + m],
+    [width - m, 0 + m],
+    [0 + m, height - m]
   );
   const triangle2 = new Triangle(
-    [width - ms, height - mb],
-    [0 + ms, height - mb],
-    [width - ms, 0 + mt]
+    [width - m, height - m],
+    [0 + m, height - m],
+    [width - m, 0 + m]  
   );
 
   grow(triangle1, 0);

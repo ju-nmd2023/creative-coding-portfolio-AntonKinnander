@@ -55,6 +55,12 @@ function goToExperiment(index) {
   toneScript.defer = true;
   bodyElement.appendChild(toneScript);
 
+  const toneMidiScript = document.createElement("script");
+  toneMidiScript.type = "text/javascript";
+  toneMidiScript.src = "https://unpkg.com/@tonejs/midi";
+  toneMidiScript.defer = true;
+  bodyElement.appendChild(toneMidiScript);
+
   const codeScript = document.createElement("script");
   codeScript.type = "text/javascript";
   codeScript.src = experiment.file;
