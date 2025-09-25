@@ -1,10 +1,9 @@
-// Recreation of this prsim type art made by Tezumie using P5.js https://www.reddit.com/r/generative/comments/1n51jga/sketch_made_with_p5js/?show=original 
+// Recreation of this prsim type art made by Tezumie using P5.js https://www.reddit.com/r/generative/comments/1n51jga/sketch_made_with_p5js/?show=original
 // with help from this video for gradients https://www.youtube.com/watch?v=-MUOweQ6wac
 // and this article to learn triangle subdivision  - https://www.tylerxhobbs.com/words/aesthetically-pleasing-triangle-subdivision
 
-// Basically im starting with a square and dividing it into triangles then those into further smaller randomness but with randomness for where the points get placed. 
+// Basically im starting with a square and dividing it into triangles then those into further smaller randomness but with randomness for where the points get placed.
 //Point d is always 0.5 so it doesnt get too crazy
-
 
 let m;
 let isDone = false;
@@ -19,32 +18,32 @@ let dividePoint; // moved to be able to randomize - 0.5 makes it perfect, other 
 
 //Preconfigured palettes, 0 = ground, 1 = sky, 2 = sun, 3 = clouds
 const grassyMountains = [
-  { start: [15, 95, 75], end: [9, 21, 47], },
-  { start: [51, 139, 194], end: [229, 199, 208], },
-  { start: [220, 120, 102], end: [244, 209, 154], },
-  { start: [201,214,255], end: [226, 226, 226], },
-]
+  { start: [15, 95, 75], end: [9, 21, 47] },
+  { start: [51, 139, 194], end: [229, 199, 208] },
+  { start: [220, 120, 102], end: [244, 209, 154] },
+  { start: [201, 214, 255], end: [226, 226, 226] },
+];
 const redDesert = [
-  { start: [255, 197, 147], end: [255, 232, 206], },
-  { start: [188,157,165], end: [84, 94, 116], },
-  { start: [255, 75, 31], end: [255, 144, 104], },
-  { start: [157, 138, 150], end: [118, 115, 132], },
-]
+  { start: [255, 197, 147], end: [255, 232, 206] },
+  { start: [188, 157, 165], end: [84, 94, 116] },
+  { start: [255, 75, 31], end: [255, 144, 104] },
+  { start: [157, 138, 150], end: [118, 115, 132] },
+];
 // Mountains
 const grayMountains = [
-  { start: [188,157,165], end: [84, 94, 116], },
-  { start: [51, 139, 194], end: [229, 199, 208], },
-  { start: [220, 120, 102], end: [244, 209, 154], },
-  { start: [201,214,255], end: [226, 226, 226], },
-]
+  { start: [188, 157, 165], end: [84, 94, 116] },
+  { start: [51, 139, 194], end: [229, 199, 208] },
+  { start: [220, 120, 102], end: [244, 209, 154] },
+  { start: [201, 214, 255], end: [226, 226, 226] },
+];
 
-// Windows XP Bliss 
+// Windows XP Bliss
 const windowsXP = [
-  { start: [175,255,70], end: [39, 72, 12], },
-  { start: [152, 205, 250], end: [25, 120, 248], },
-  { start: [255, 239, 134], end: [254, 191, 62], },
-  { start: [255,255,255], end: [167, 203, 253], },
-]
+  { start: [175, 255, 70], end: [39, 72, 12] },
+  { start: [152, 205, 250], end: [25, 120, 248] },
+  { start: [255, 239, 134], end: [254, 191, 62] },
+  { start: [255, 255, 255], end: [167, 203, 253] },
+];
 
 // const redDesert = [
 //   { start: [220, 120, 102], end: [244, 209, 154], },
@@ -67,13 +66,12 @@ const activeGradient = gradients[Math.floor(Math.random() * gradients.length)];
 let triangles = [];
 
 function setup() {
-createCanvas(windowWidth, windowHeight);
+  createCanvas(windowWidth, windowHeight);
 
-m = 0;
-// mt = height/ (6 + 2);
-//   mb = height/ (6 - 2);
-//   ms = width/5;
-
+  m = 0;
+  // mt = height/ (6 + 2);
+  //   mb = height/ (6 - 2);
+  //   ms = width/5;
 
   pixelDensity(1); // Makes stroke sharper
   strokeCap(ROUND);
@@ -82,38 +80,31 @@ m = 0;
   // noLoop();
   // noFill();
   generateTriangles();
-
- 
 }
 
 function draw() {
   // cream background
-  background(255,245,230); 
+  background(255, 245, 230);
 
-  
-  
   for (const triangle of triangles) {
     triangle.draw();
   }
- 
+
   // if (!isDone) {
   //   isDone = true;
   //   noiseOverlay();
   // }
-  
 }
-
-
 
 class Triangle {
   constructor(side1, side2, side3) {
     this.side1 = side1;
     this.side2 = side2;
     this.side3 = side3;
-    
+
     this.center = [
       (side1[0] + side2[0] + side3[0]) / 3,
-      (side1[1] + side2[1] + side3[1]) / 3
+      (side1[1] + side2[1] + side3[1]) / 3,
     ];
 
     this.gradient = this.determineGradient();
@@ -132,10 +123,10 @@ class Triangle {
       if (Math.abs(point[1] - height) < 1) {
         bottomPoints++;
       }
- // Check top
- else if (Math.abs(point[1]) < 1) {
-  topPoints++;
-} 
+      // Check top
+      else if (Math.abs(point[1]) < 1) {
+        topPoints++;
+      }
 
       // Check left
       if (Math.abs(point[0]) < 1) {
@@ -146,16 +137,14 @@ class Triangle {
       else if (Math.abs(point[0] - width) < 1) {
         sidePoints++;
       }
-     
     }
-
 
     switch (true) {
       case bottomPoints >= 1 && sidePoints <= 2:
         return activeGradient[0];
       case topPoints === 1 && leftPoints === 1:
         return activeGradient[2];
-      case topPoints === 1 && sidePoints >= 0 && leftPoints <= 1 :
+      case topPoints === 1 && sidePoints >= 0 && leftPoints <= 1:
         return activeGradient[3];
       default:
         return activeGradient[1];
@@ -166,11 +155,13 @@ class Triangle {
     randomSeed(1);
     const gradientSize = random(20, 200);
     let gradient = drawingContext.createLinearGradient(
-      this.center[0] - gradientSize, this.center[1] - gradientSize,
-      this.center[0] + gradientSize, this.center[1] + gradientSize
+      this.center[0] - gradientSize,
+      this.center[1] - gradientSize,
+      this.center[0] + gradientSize,
+      this.center[1] + gradientSize
     );
 
-  //Wanna try randomize direction here
+    //Wanna try randomize direction here
     const [h1, s1, b1] = this.gradient.start;
     const [h2, s2, b2] = this.gradient.end;
     gradient.addColorStop(0, color(h1, s1, b1));
@@ -179,9 +170,12 @@ class Triangle {
     drawingContext.fillStyle = gradient;
 
     triangle(
-      this.side1[0], this.side1[1],
-      this.side2[0], this.side2[1],
-      this.side3[0], this.side3[1]
+      this.side1[0],
+      this.side1[1],
+      this.side2[0],
+      this.side2[1],
+      this.side3[0],
+      this.side3[1]
     );
   }
 
@@ -203,7 +197,6 @@ class Triangle {
 
 // Create two triangles as a starting point
 function generateTriangles() {
-
   triangles = [];
 
   const triangle1 = new Triangle(
@@ -237,13 +230,12 @@ function distanceSquared(pointA, pointB) {
   return deltaX * deltaX + deltaY * deltaY;
 }
 
-// Gets the longest side of a triangle and returns its two points along with the opposite point in 
+// Gets the longest side of a triangle and returns its two points along with the opposite point in
 // order to split the triangle into two smaller triangles
 function longestSideWithOpposite(side1, side2, side3) {
   const d12 = distanceSquared(side1, side2);
   const d23 = distanceSquared(side2, side3);
   const d31 = distanceSquared(side3, side1);
-
 
   if (d12 >= d23 && d12 >= d31) {
     return { pointA: side1, pointB: side2, opposite: side3 };
@@ -255,12 +247,15 @@ function longestSideWithOpposite(side1, side2, side3) {
 }
 
 function lerpPoints(pointA, pointB, interpolation) {
-  return [pointA[0] + (pointB[0] - pointA[0]) * interpolation, pointA[1] + (pointB[1] - pointA[1]) * interpolation];
+  return [
+    pointA[0] + (pointB[0] - pointA[0]) * interpolation,
+    pointA[1] + (pointB[1] - pointA[1]) * interpolation,
+  ];
 }
 
 function noiseOverlay() {
-  for (let x = 0; x < width; x++ ) {
-    for (let y = 0; y < height; y++ ) {
+  for (let x = 0; x < width; x++) {
+    for (let y = 0; y < height; y++) {
       if (Math.random() > 0.7) {
         fill(0);
         square(x, y, 1);
@@ -269,7 +264,6 @@ function noiseOverlay() {
   }
   isDone = true;
 }
-
 
 function windowResized() {
   resizeCanvas(innerWidth, innerHeight);
