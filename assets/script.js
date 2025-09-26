@@ -55,6 +55,7 @@ function goToExperiment(index) {
   toneScript.defer = true;
   bodyElement.appendChild(toneScript);
 
+  // Tone JS MIDI
   const toneMidiScript = document.createElement("script");
   toneMidiScript.type = "text/javascript";
   toneMidiScript.src = "https://unpkg.com/@tonejs/midi";

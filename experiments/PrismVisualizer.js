@@ -1,7 +1,6 @@
-
 // References for the prism part
 
-// Recreation of this prsim type art made by Tezumie using P5.js https://www.reddit.com/r/generative/comments/1n51jga/sketch_made_with_p5js/?show=original 
+// Recreation of this prsim type art made by Tezumie using P5.js https://www.reddit.com/r/generative/comments/1n51jga/sketch_made_with_p5js/?show=original
 // with help from this video for gradients https://www.youtube.com/watch?v=-MUOweQ6wac
 // and this article to learn triangle subdivision  - https://www.tylerxhobbs.com/words/aesthetically-pleasing-triangle-subdivision
 
@@ -9,7 +8,6 @@
 // midi file sources bitmidi.com & freemidi.org
 // midi to json converter https://tonejs.github.io/Midi/
 // using tone js for audio like their examples https://github.com/Tonejs/Tone.js/
-
 
 let midi = null;
 let synths = [];
@@ -21,36 +19,35 @@ let centerRadius = 100;
 let radiusTarget = 100;
 
 const midiFiles = [
-  'Mii Channel.json',
-  'All Star smash mouth.json',
-  'Beethoven Moonlight Sonata.json',
-  'Cool Cool Mountain.json',
-  'MGMT - Kids.json',
-  'Sans undertale.json',
-  'Tokyo drift.json',
-  'Pingu.json',
-  'International Love.json',
-  'Smash Mouth Im A Believer.json',
-  'daft_punk-giorgio_by_moroder.json',
-  'Gangnam Style.json',
-  'Feel this moment.json',
-  'Yamaha.json',
-  'var ska vi sova inatt perikles.json',
-  'Timber.json',
-  'Ma Baker.json',
-  'What ive done.json',
-  'Rasputin.json',
-  'Crawling (linkin park).json',
-  'Alphaville - Big in Japan.json',
-  'Axel F.json',
-  'My way frank sinatra.json',
-  'Numb.json',
-  'Maroon 5 - One more night.json',
-  'Initial D - Rage Your Dream.json',
-  'Hamster Dance.json',
-  'Dreamscape.json',
-  'David Guetta Kid Cudi - Memories.json',
-  'Cry for you.json'
+  "Mii Channel.json",
+  "All Star smash mouth.json",
+  "Beethoven Moonlight Sonata.json",
+  "Cool Cool Mountain.json",
+  "MGMT - Kids.json",
+  "Sans undertale.json",
+  "Tokyo drift.json",
+  "Pingu.json",
+  "International Love.json",
+  "Smash Mouth Im A Believer.json",
+  "daft_punk-giorgio_by_moroder.json",
+  "Gangnam Style.json",
+  "Feel this moment.json",
+  "var ska vi sova inatt perikles.json",
+  "Timber.json",
+  "Ma Baker.json",
+  "What ive done.json",
+  "Rasputin.json",
+  "Crawling (linkin park).json",
+  "Alphaville - Big in Japan.json",
+  "Axel F.json",
+  "My way frank sinatra.json",
+  "Numb.json",
+  "Maroon 5 - One more night.json",
+  "Initial D - Rage Your Dream.json",
+  "Hamster Dance.json",
+  "Dreamscape.json",
+  "David Guetta Kid Cudi - Memories.json",
+  "Cry for you.json",
 ];
 let currentMidiIndex = 0;
 
@@ -65,8 +62,8 @@ let dividePoint;
 
 // triangle colors
 const primaryGradient = { start: [280, 90, 80], end: [320, 50, 60] }; // center
-const secondaryGradient = { start: [300, 100, 0], end: [267, 100, 2] }; 
-const highlightGradient = { start: [60, 100, 100], end: [30, 100, 80] }; 
+const secondaryGradient = { start: [300, 100, 0], end: [267, 100, 2] };
+const highlightGradient = { start: [60, 100, 100], end: [30, 100, 80] };
 
 let triangles = [];
 let highlightedTriangles = new Map(); // Map of triangle -> expiration time
@@ -126,7 +123,7 @@ class Triangle {
 
     this.center = [
       (side1[0] + side2[0] + side3[0]) / 3,
-      (side1[1] + side2[1] + side3[1]) / 3
+      (side1[1] + side2[1] + side3[1]) / 3,
     ];
 
     //build in distancefrom center every time an triangle is built, had to ask ai to help me with this.
@@ -151,7 +148,7 @@ class Triangle {
         return highlightGradient;
       }
     }
-    
+
     return this.intersectsRadius() ? primaryGradient : secondaryGradient;
   }
 
@@ -159,8 +156,8 @@ class Triangle {
     const centerX = width / 2;
     const centerY = height / 2;
 
-     //build in distancefrom center every time an triangle is built, ai added the distancefromcenter variable
-     // before i onmly calculated this for the first triangles which was dumb
+    //build in distancefrom center every time an triangle is built, ai added the distancefromcenter variable
+    // before i onmly calculated this for the first triangles which was dumb
     if (this.distanceFromCenter <= centerRadius) {
       return true;
     }
@@ -258,8 +255,6 @@ function grow(triangle, depth) {
   grow(child2, depth + 1);
 }
 
-
-
 function distanceSquared(pointA, pointB) {
   const deltaX = pointA[0] - pointB[0];
   const deltaY = pointA[1] - pointB[1];
@@ -284,7 +279,7 @@ function longestSideWithOpposite(side1, side2, side3) {
 function lerpPoints(pointA, pointB, interpolation) {
   return [
     pointA[0] + (pointB[0] - pointA[0]) * interpolation,
-    pointA[1] + (pointB[1] - pointA[1]) * interpolation
+    pointA[1] + (pointB[1] - pointA[1]) * interpolation,
   ];
 }
 
@@ -292,11 +287,11 @@ function lerpPoints(pointA, pointB, interpolation) {
 async function setupAudioContext() {
   try {
     // load midis
-    audioAnalyser = new Tone.Analyser('waveform', 256);
+    audioAnalyser = new Tone.Analyser("waveform", 256);
 
     await loadMidiFile(midiFiles[currentMidiIndex]);
   } catch (error) {
-    console.error('Error setting up audio:', error);
+    console.error("Error setting up audio:", error);
   }
 }
 
@@ -316,7 +311,7 @@ async function loadMidiFile(filename) {
     radiusTarget = map(currentTempo, 60, 180, 80, 200);
     noStroke();
   } catch (error) {
-    console.error('Error loading MIDI file:', error);
+    console.error("Error loading MIDI file:", error);
   }
 }
 
@@ -349,28 +344,28 @@ async function playMusic() {
 
   try {
     // browsers need a click to play sound
-    if (Tone.context.state !== 'running') {
+    if (Tone.context.state !== "running") {
       await Tone.start();
-      console.log('Audio context started');
+      console.log("Audio context started");
     }
 
     // remove old instruments
-    synths.forEach(synth => synth.dispose());
+    synths.forEach((synth) => synth.dispose());
     synths = [];
 
     const now = Tone.now() + 0.1;
 
     // make an instrument for each track
-    midi.tracks.forEach(track => {
+    midi.tracks.forEach((track) => {
       if (track.notes && track.notes.length > 0) {
         const synth = new Tone.PolySynth(Tone.Synth, {
           envelope: {
             attack: 0.02,
             decay: 0.1,
             sustain: 0.3,
-            release: 1
+            release: 1,
           },
-          volume: -6
+          volume: -6,
         });
 
         synth.connect(audioAnalyser);
@@ -378,48 +373,54 @@ async function playMusic() {
 
         synths.push(synth);
 
-          // schedule the notes
-          track.notes.forEach(note => {
-            const duration = Math.max(0.01, note.duration || 0);
-            try {
-                const noteNumber = Tone.Frequency(note.name).toMidi(); //based on tone js github example
-                if (noteNumber >= 50) {
-                  setTimeout(() => {
-                    const now = performance.now();
-                    if (now - lastHighPitchTime > 40) { // update less often
-                      lastHighPitchTime = now;
-                      
-    
-                      const centerTriangles = triangles.filter(triangle => triangle.intersectsRadius());
-                      if (centerTriangles.length > 0) {
-                          const triangle = centerTriangles[Math.floor(Math.random() * centerTriangles.length)];
-                          // Set expiration time (3-5 seconds from now)
-                          const expireTime = performance.now() + (300 + Math.random() * 300);
-                          highlightedTriangles.set(triangle, expireTime);
-                      }
-                    }
-                  }, note.time * 1010); //apperently i have to convert to milliseconds then delay for perception
+        // schedule the notes
+        track.notes.forEach((note) => {
+          const duration = Math.max(0.01, note.duration || 0);
+          try {
+            const noteNumber = Tone.Frequency(note.name).toMidi(); //based on tone js github example
+            if (noteNumber >= 50) {
+              setTimeout(() => {
+                const now = performance.now();
+                if (now - lastHighPitchTime > 40) {
+                  // update less often
+                  lastHighPitchTime = now;
+
+                  const centerTriangles = triangles.filter((triangle) =>
+                    triangle.intersectsRadius()
+                  );
+                  if (centerTriangles.length > 0) {
+                    const triangle =
+                      centerTriangles[
+                        Math.floor(Math.random() * centerTriangles.length)
+                      ];
+                    // Set expiration time (3-5 seconds from now)
+                    const expireTime =
+                      performance.now() + (300 + Math.random() * 300);
+                    highlightedTriangles.set(triangle, expireTime);
+                  }
                 }
-              
-              synth.triggerAttackRelease(
-                note.name,
-                duration,
-                note.time + now,
-                note.velocity
-              );
-            } catch (error) {
-              console.warn(
-                `Skipped invalid note: ${note.name} (duration: ${duration})`
-              );
+              }, note.time * 1010); //apperently i have to convert to milliseconds then delay for perception
             }
-          });
+
+            synth.triggerAttackRelease(
+              note.name,
+              duration,
+              note.time + now,
+              note.velocity
+            );
+          } catch (error) {
+            console.warn(
+              `Skipped invalid note: ${note.name} (duration: ${duration})`
+            );
+          }
+        });
       }
     });
 
     isPlaying = true;
-    console.log('Music started');
+    console.log("Music started");
   } catch (error) {
-    console.error('Error playing music:', error);
+    console.error("Error playing music:", error);
   }
 }
 
@@ -427,11 +428,14 @@ function stopMusic() {
   if (!isPlaying) return;
 
   // remove instrument configurations
-  synths.forEach(synth => synth.dispose());
+  synths.forEach((synth) => synth.dispose());
   synths = [];
   isPlaying = false;
   currentIntensity = 0;
-  console.log('Music stopped');
+  console.log("Music stopped");
+  depthLimit = 0; // no triangles visible
+  lastDepthLimit = 0; // no triangles visible
+  triangles = []; // no triangles visible
 }
 
 async function nextSong() {
@@ -451,44 +455,44 @@ async function prevSong() {
 
 //Had ai construct and inject ui instead of looking for keypresses, was able to keep prev next song functions and just modify them
 function createUIControls() {
-  const uiContainer = createDiv('');
+  const uiContainer = createDiv("");
   uiContainer.position(20, 20);
-  uiContainer.style('color', 'white');
-  uiContainer.style('font-family', 'Arial, sans-serif');
-  uiContainer.style('background', 'rgba(0,0,0,0.7)');
-  uiContainer.style('padding', '15px');
-  uiContainer.style('border-radius', '10px');
-  uiContainer.style('z-index', '1000');
+  uiContainer.style("color", "white");
+  uiContainer.style("font-family", "Arial, sans-serif");
+  uiContainer.style("background", "rgba(0,0,0,0.7)");
+  uiContainer.style("padding", "15px");
+  uiContainer.style("border-radius", "10px");
+  uiContainer.style("z-index", "1000");
 
-  const songDisplay = createP('');
-  songDisplay.id('songDisplay');
+  const songDisplay = createP("");
+  songDisplay.id("songDisplay");
   songDisplay.parent(uiContainer);
-  songDisplay.style('margin', '0 0 10px 0');
+  songDisplay.style("margin", "0 0 10px 0");
 
-  const buttonContainer = createDiv('');
+  const buttonContainer = createDiv("");
   buttonContainer.parent(uiContainer);
-  buttonContainer.style('display', 'flex');
-  buttonContainer.style('gap', '10px');
+  buttonContainer.style("display", "flex");
+  buttonContainer.style("gap", "10px");
 
-  const prevBtn = createButton('⏮ Prev');
+  const prevBtn = createButton("⏮ Prev");
   prevBtn.parent(buttonContainer);
   prevBtn.mousePressed(prevSong);
   styleButton(prevBtn);
 
-  const playBtn = createButton('▶ Play');
+  const playBtn = createButton("▶ Play");
   playBtn.parent(buttonContainer);
   playBtn.mousePressed(() => {
     if (isPlaying) {
       stopMusic();
-      playBtn.html('▶');
+      playBtn.html("▶");
     } else {
       playMusic();
-      playBtn.html('⏸');
+      playBtn.html("⏸");
     }
   });
   styleButton(playBtn);
 
-  const nextBtn = createButton('Next ⏭');
+  const nextBtn = createButton("Next ⏭");
   nextBtn.parent(buttonContainer);
   nextBtn.mousePressed(nextSong);
   styleButton(nextBtn);
@@ -498,18 +502,20 @@ function createUIControls() {
 }
 
 function styleButton(button) {
-  button.style('background', '#333');
-  button.style('color', 'white');
-  button.style('border', 'none');
-  button.style('padding', '8px 12px');
-  button.style('border-radius', '5px');
-  button.style('cursor', 'pointer');
+  button.style("background", "#333");
+  button.style("color", "white");
+  button.style("border", "none");
+  button.style("padding", "8px 12px");
+  button.style("border-radius", "5px");
+  button.style("cursor", "pointer");
 }
 
 function updateSongDisplay() {
-  const songName = midiFiles[currentMidiIndex].replace('.json', '');
-  select('#songDisplay').html(
-    `Now: <strong>${songName}</strong><br>Tempo: ${Math.floor(currentTempo)} BPM`
+  const songName = midiFiles[currentMidiIndex].replace(".json", "");
+  select("#songDisplay").html(
+    `Now: <strong>${songName}</strong><br>Tempo: ${Math.floor(
+      currentTempo
+    )} BPM`
   );
 }
 
