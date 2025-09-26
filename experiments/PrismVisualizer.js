@@ -58,14 +58,15 @@ let currentMidiIndex = 0;
 let m;
 let isDone = false;
 let depthLimit = 0;
-let baseDepthLimit = 7;
-let lastDepthLimit = 7; // to not redraw when not needed
+let baseDepthLimit = 8;
+let lastDepthLimit = 8; // to not redraw when not needed
+let maxDepthLimit = 10;
 let dividePoint;
 
 // triangle colors
-const primaryGradient = { start: [280, 100, 80], end: [320, 100, 60] }; // center
+const primaryGradient = { start: [280, 90, 80], end: [320, 50, 60] }; // center
 const secondaryGradient = { start: [300, 100, 0], end: [267, 100, 2] }; 
-const highlightGradient = { start: [60, 100, 100], end: [30, 100, 80] }; // bright yellow-orange highlight
+const highlightGradient = { start: [60, 100, 100], end: [30, 100, 80] }; 
 
 let triangles = [];
 let highlightedTriangles = new Map(); // Map of triangle -> expiration time
@@ -107,7 +108,7 @@ function draw() {
   depthLimit = baseDepthLimit + Math.floor(currentIntensity * 3);
 
   // only remake triangles when needed
-  if (depthLimit !== lastDepthLimit) {
+  if (depthLimit !== lastDepthLimit && depthLimit <= maxDepthLimit) {
     generateTriangles();
     lastDepthLimit = depthLimit;
   }
@@ -128,6 +129,8 @@ class Triangle {
       (side1[1] + side2[1] + side3[1]) / 3
     ];
 
+    //build in distancefrom center every time an triangle is built, had to ask ai to help me with this.
+    //Could make it draw a circle static but not when triangles regenerated until this fix
     this.distanceFromCenter = dist(
       this.center[0],
       this.center[1],
@@ -139,7 +142,7 @@ class Triangle {
   }
 
   selectGradientByRadius() {
-    // Clean up expired highlights
+    // remove dead highlight
     const now = performance.now();
     if (highlightedTriangles.has(this)) {
       if (now > highlightedTriangles.get(this)) {
@@ -156,6 +159,8 @@ class Triangle {
     const centerX = width / 2;
     const centerY = height / 2;
 
+     //build in distancefrom center every time an triangle is built, ai added the distancefromcenter variable
+     // before i onmly calculated this for the first triangles which was dumb
     if (this.distanceFromCenter <= centerRadius) {
       return true;
     }
@@ -182,17 +187,17 @@ class Triangle {
       this.center[1] + gradientSize
     );
 
-    const intensityFactor = 1 + currentIntensity * 0.5;
+    const intensityFactor = 1 + currentIntensity * 0.5; //used for traingle subdivisons
     const [h1, s1, b1] = this.gradient.start;
     const [h2, s2, b2] = this.gradient.end;
 
-    // colors change with music volume
+    // HSB color pulse
     const modH1 = (h1 + currentIntensity * 20) % 360;
     const modH2 = (h2 + currentIntensity * 20) % 360;
-    const modS1 = Math.min(100, s1 * intensityFactor * intensityFactor);
-    const modS2 = Math.min(100, s2 * intensityFactor * intensityFactor);
-    const modB1 = Math.min(100, b1 * intensityFactor);
-    const modB2 = Math.min(100, b2 * intensityFactor);
+    const modS1 = Math.min(100, s1 * Math.pow(intensityFactor, 2));
+    const modS2 = Math.min(100, s2 * Math.pow(intensityFactor, 2));
+    const modB1 = Math.min(100, b1 * Math.pow(intensityFactor, 2));
+    const modB2 = Math.min(100, b2 * Math.pow(intensityFactor, 2));
 
     gradient.addColorStop(0, color(modH1, modS1, modB1));
     gradient.addColorStop(1, color(modH2, modS2, modB2));
@@ -253,6 +258,8 @@ function grow(triangle, depth) {
   grow(child2, depth + 1);
 }
 
+
+
 function distanceSquared(pointA, pointB) {
   const deltaX = pointA[0] - pointB[0];
   const deltaY = pointA[1] - pointB[1];
@@ -281,10 +288,10 @@ function lerpPoints(pointA, pointB, interpolation) {
   ];
 }
 
-// audio and ui stuff
+// audio and ui setup, based on tonejs github example
 async function setupAudioContext() {
   try {
-    // use tone js to get music data
+    // load midis
     audioAnalyser = new Tone.Analyser('waveform', 256);
 
     await loadMidiFile(midiFiles[currentMidiIndex]);
@@ -375,22 +382,23 @@ async function playMusic() {
           track.notes.forEach(note => {
             const duration = Math.max(0.01, note.duration || 0);
             try {
-                const noteNumber = Tone.Frequency(note.name).toMidi();
-                if (noteNumber >= 20) {
+                const noteNumber = Tone.Frequency(note.name).toMidi(); //based on tone js github example
+                if (noteNumber >= 50) {
                   setTimeout(() => {
                     const now = performance.now();
                     if (now - lastHighPitchTime > 40) { // update less often
                       lastHighPitchTime = now;
                       
-                      const centerTriangles = triangles.filter(t => t.intersectsRadius());
+    
+                      const centerTriangles = triangles.filter(triangle => triangle.intersectsRadius());
                       if (centerTriangles.length > 0) {
                           const triangle = centerTriangles[Math.floor(Math.random() * centerTriangles.length)];
                           // Set expiration time (3-5 seconds from now)
-                          const expireTime = performance.now() + (3000 + Math.random() * 2000);
+                          const expireTime = performance.now() + (300 + Math.random() * 300);
                           highlightedTriangles.set(triangle, expireTime);
                       }
                     }
-                  }, note.time * 1005); //apperently i have to convert to milliseconds then delay for perception
+                  }, note.time * 1010); //apperently i have to convert to milliseconds then delay for perception
                 }
               
               synth.triggerAttackRelease(
@@ -441,6 +449,7 @@ async function prevSong() {
   updateSongDisplay();
 }
 
+//Had ai construct and inject ui instead of looking for keypresses, was able to keep prev next song functions and just modify them
 function createUIControls() {
   const uiContainer = createDiv('');
   uiContainer.position(20, 20);
